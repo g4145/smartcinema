@@ -39,10 +39,13 @@ class Admin
         QSqlQueryModel* trier();
         QSqlQueryModel* trier1();
         QSqlQueryModel* trier2();
+        bool modifier(int idc ,QString nom,QString prenom,QString username,QString password);
         QSqlQueryModel * chercher_admin_par_nom(QString m);
         QSqlQueryModel * chercher_admin_par_prenom(QString p);
         QSqlQueryModel * chercher_admin_par_id(QString idd);
          QSqlQueryModel* Filter(int);
+         bool verifierExnoms(QString);
+          QSqlQueryModel* recherche_nom(QString);
         QStringList listemploye();
         QStringList listemploye1();
         int calcul_employe(int,int);

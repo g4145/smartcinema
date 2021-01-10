@@ -63,7 +63,7 @@ bool Admin::ajouter(){
 
     return query.exec();
 }
-/*
+
 bool Admin::supprimer(int id){
     QSqlQuery q;
     q.prepare("select * from compte where id=:id");
@@ -87,14 +87,15 @@ bool Admin::supprimer(int id){
 
 }
 
-bool Admin::modifier(int idc ,QString nomsalle,int capacite,int numbloc){
+bool Admin::modifier(int idc ,QString nom,QString prenom,QString username,QString password){
     QSqlQuery query;
-    query.prepare("update salle set nomsalle=:nomsalle,numbloc=:numbloc,capacite=:capacite where id=:idc");
+    query.prepare("update compte set nom=:nom,prenom=:prenom,username=:username,password=:password where id=:idc");
     query.bindValue(":id",id);
 
-    query.bindValue(":nomsalle",nomsalle);
-    query.bindValue(":numbloc",numbloc);
-    query.bindValue(":capacite",capacite);
+    query.bindValue(":nom",nom);
+    query.bindValue(":prenom",prenom);
+    query.bindValue(":username",username);
+    query.bindValue(":password",password);
     query.bindValue(":idc",idc);
 
     return query.exec();
@@ -102,15 +103,15 @@ bool Admin::modifier(int idc ,QString nomsalle,int capacite,int numbloc){
 
 QSqlQueryModel * Admin::afficher(){
     QSqlQueryModel * model=new QSqlQueryModel();
-    model->setQuery("select * from salle");
+    model->setQuery("select * from compte");
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOMSALLE"));
-
-
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("PRENOM"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("USERNAME"));
     return model;
 }
 
-
+/*
 QSqlQueryModel * Admin::chercher_Salle_par_nom(QString m)
  {
 
@@ -188,14 +189,14 @@ QSqlQueryModel* Admin:: trier2()
     model->setHeaderData(3, Qt::Horizontal, QObject::tr("CAPACITE"));
 
     return model;
-}
+}*/
 QSqlQueryModel* Admin::recherche_nom(QString nom){
     QSqlQueryModel *model = new QSqlQueryModel;
-    model->setQuery("SELECT * FROM Salle WHERE NOMSALLE like '"+nom+"' ");
+    model->setQuery("SELECT * FROM Compte WHERE NOM like '"+nom+"' ");
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOMSALLE"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("NUMBLOC"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("CAPACITE"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("PRENOM"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("USERNAME"));
     return model ;
 }
 
@@ -204,7 +205,7 @@ QSqlQueryModel* Admin::recherche_nom(QString nom){
  int i=0;
 
  QSqlQuery query;
- query.prepare("select * from salle where NOMSALLE= ? ");
+ query.prepare("select * from compte where NOM= ? ");
 query.addBindValue(nom);
  if(query.exec())
  {while(query.next())
@@ -215,7 +216,7 @@ query.addBindValue(nom);
  else
      return false;}
 
-
+/*
 QStringList Admin::listeSalle(){
     QSqlQuery query;
     query.prepare("select * from Salle");
